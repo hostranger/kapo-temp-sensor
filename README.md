@@ -1,2 +1,5 @@
 # kapo-temp-sensor
-Temperatorsensor
+Temperatursensor
+
+This is a p rototype of a very simple temperature sensor.
+
