@@ -1,0 +1,18 @@
+#!/bin/bash
+
+SENSORURI=$1
+COUNT_WARN=28
+COUNT_CRIT=30
+TEMPFILE=$(mktemp)
+RETURN=$(curl -s -o ${TEMPFILE} -w "%{http_code}" "${IP}")
+CURRENT=$(cat ${TEMPFILE})
+
+
+if [ "${RETURN}" -eq "200" ]
+then
+        echo "P ${0##*/} count=${CURRENT};${COUNT_WARN};${COUNT_CRIT} HTTP_RETURN: ${RETURN} - Value: ${CURRENT} "
+else
+	STATUS=4
+fi
+
+rm "${TEMPFILE}"
