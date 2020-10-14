@@ -8,4 +8,4 @@ This is a p rototype of a very simple temperature sensor.
 
 ## Libraries
 - DHT sensor library for ESPx
-- 
+- python3-serial (linux package in Debian/Ubuntu)
