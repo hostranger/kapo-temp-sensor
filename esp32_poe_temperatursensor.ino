@@ -11,7 +11,7 @@
 #include <DHTesp.h>
 
 /* Put IP Address details */
-IPAddress local_ip(192,168,10,124);
+IPAddress local_ip(192,168,10,95);
 IPAddress gateway(192,168,10,1);
 IPAddress subnet(255,255,255,0);
 IPAddress dns1(192,168,10,10);
@@ -104,17 +104,20 @@ void handleNotFound() {
 }
 
 void handleTempReadout() {
-//  Temperature = 24;
   delay(dht.getMinimumSamplingPeriod());
-
-//  float Humidity = dht.getHumidity();
   float Temperature = dht.getTemperature();
-
   Serial.print(dht.getStatusString());
-  
   Serial.println("Temperature: " + String(Temperature));
   server.send(200, "text/plain", String(Temperature)); 
-//  server.send(200, "text/plain", "Temp: ");
+}
+
+
+void handleHumReadout() {
+  delay(dht.getMinimumSamplingPeriod());
+  float Humidity = dht.getHumidity();
+  Serial.print(dht.getStatusString());
+  Serial.println("Humidity: " + String(Humidity));
+  server.send(200, "text/plain", String(Humidity)); 
 }
 
 void setup()
@@ -134,9 +137,8 @@ void setup()
   });
 
   server.on("/temp", handleTempReadout);
-
+  server.on("/hum", handleHumReadout);
   server.onNotFound(handleNotFound);
-
   server.begin();
 }
 
